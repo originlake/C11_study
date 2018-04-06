@@ -1,0 +1,43 @@
+#include <cstdlib>
+#include <iostream>
+#include <algorithm>
+#include <string>
+#include <conio.h>
+#include <vector>
+#include <map>
+using namespace std;
+struct ListNode {
+	int val;
+	ListNode *next;
+	ListNode(int x) : val(x), next(NULL) {}
+};
+
+class Solution {
+public:
+	int trap(vector<int>& height) {
+		int l = 0, r = height.size()-1;
+		int sum = 0,v=0;
+		while (l < r) {
+			if (min(height[l], height[r])>v) {
+				v = min(height[l], height[r]);
+			}
+			if (height[l] <= height[r]) {
+				if (v >= height[l]) {
+					sum = sum + v - height[l];
+				}
+				l++;
+			}
+			else {
+				if (v > height[r]) {
+					sum = sum + v - height[r];
+				}
+				r--;
+			}
+		}
+		return sum;
+	}
+};
+int main() {
+	vector<int> a = { 1,0 ,9,9,0,1};
+	cout << Solution().trap(a) << endl;
+}
