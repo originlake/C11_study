@@ -1,0 +1,12 @@
+1.pow(a,b)  // b integer
+  pow(a,b)
+  if b%2==0:
+    return pow(a*a,b/2);
+  else:
+    return a*pow(a*a,(b-1)/2);
+2.sqrt(x)   // newton's method to solve equations
+  solve f(r)=r^2-x=0
+  0=f(r)=(r-r0)f'(r0)+f(r0)  ->  r1=r0-f(r0)/f'(r0)  -> .....
+
+
+  
