@@ -9,5 +9,5 @@
   solve f(r)=r^2-x=0
   0=f(r)=(r-r0)f'(r0)+f(r0)  ->  r1=r0-f(r0)/f'(r0)  -> .....
 
-
+3. integer a/2  ->  a >> 1
   
