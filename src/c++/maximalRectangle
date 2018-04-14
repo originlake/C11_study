@@ -1,0 +1,63 @@
+#include <iostream>
+#include <string>
+#include <vector>
+#include <algorithm>
+#include  <sstream>
+
+using namespace std;
+
+struct ListNode {
+	int val;
+	ListNode *next;
+	ListNode(int x) : val(x), next(NULL) {}	
+};
+class Solution {
+public:
+	int maximalRectangle(vector<vector<char>>& matrix) {
+		if (matrix.empty() || matrix[0].empty()) return 0;
+		int m = (int)matrix.size();
+		int n = (int)matrix[0].size();
+		int area = 0;
+		vector<int> heights(n, 0);
+		for (int i = 0; i < m; i++) {
+			for (int j = 0; j < n; j++) {
+				if (matrix[i][j] == '0') heights[j] = 0;
+				else heights[j]++;
+			}
+			area = max(area, largestRectangleArea(heights));
+		}
+		return area;
+	}
+	int largestRectangleArea(vector<int>& heights) {
+		heights.push_back(0);
+		heights.insert(heights.begin(), 0);
+		vector<int> index;
+		int maxh = 0;
+		int l, r, len;
+		for (int i = 0; i < heights.size(); i++) {
+			if (index.empty() || heights[index.back()] <= heights[i]) {
+				index.push_back(i);
+			}
+			else {
+				while (!index.empty() && heights[index.back()] > heights[i]) {
+					r = index.back();
+					l = r;
+					index.pop_back();
+					while (!index.empty() && heights[index.back()] == heights[r]) {
+						index.pop_back();
+					}
+					len = i - index.back() - 1;
+					maxh = max(maxh, heights[r] * len);
+				}
+				index.push_back(i);
+			}
+		}
+		heights.erase(heights.begin());
+		heights.pop_back();
+		return maxh;
+	}
+};
+int main() {
+	vector<vector<char>> matrix = { {'1', '0'} ,{'1','0'} };
+	cout << Solution().maximalRectangle(matrix);
+}
