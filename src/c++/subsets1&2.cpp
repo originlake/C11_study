@@ -45,7 +45,36 @@ public:
 		
 	}
 };
+//SubsetsW/0duo
+class Solution2 {
+public:
+	vector<vector<int>> subsetsWithDup(vector<int>& nums) {
+		vector<int> a(nums.begin(), nums.end());
+		sort(a.begin(), a.end());
+		vector<vector<int>> res;
+		vector<int> tmp;
+		mySubsets(a, res, tmp, 0);
+		return res;
+	}
 
+	void mySubsets(vector<int> &nums, vector<vector<int>> &res, vector<int> &tmp, int i) {
+		if (i == (int)nums.size()) {
+			res.push_back(tmp);
+		}
+		else {
+			int j = i;
+			while (j == i || (j < (int)nums.size() && nums[j] == nums[j - 1])) {
+				tmp.push_back(nums[j++]);
+			}
+			int k = j-1;
+			while (k-- >= i) {
+				mySubsets(nums, res, tmp, j);
+				tmp.pop_back();
+			}
+			mySubsets(nums, res, tmp, j);
+		}
+	}
+};
 int main() {
 	vector<int> a = { 1,2,3 };
 	vector<vector<int>> b = Solution1().subsets(a);
