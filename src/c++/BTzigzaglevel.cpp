@@ -2,6 +2,7 @@
 class Solution {
 public:
 	vector<vector<int>> zigzagLevelOrder(TreeNode* root) {
+		if(!root) return vector<vector<int>>();
 		stack<TreeNode*> l;
 		stack<TreeNode*> r;
 		vector<vector<int>> res;
@@ -18,7 +19,7 @@ public:
 				if (cur->right) r.push(cur->right);
 			}
 			dep++;
-			res.push_back(vector<int>());
+			if(!l.empty() && !r.empty()) res.push_back(vector<int>());
 			while (!r.empty()) {
 				cur = r.top();
 				r.pop();
@@ -28,7 +29,6 @@ public:
 			}
 			dep++;
 		}
-		
 		return res;
 	}
 };
