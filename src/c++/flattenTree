@@ -1,0 +1,41 @@
+#include<iostream>
+#include<vector>
+#include<string>
+#include <algorithm>
+using namespace std;
+
+//Definition for a binary tree node.
+struct TreeNode {
+    int val;
+    TreeNode *left;
+    TreeNode *right;
+    TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+};
+
+struct ListNode {
+	int val;
+	ListNode *next;
+	ListNode(int x) : val(x), next(NULL) {}
+};
+
+class Solution {
+public:
+	void flatten(TreeNode* root) {
+		TreeNode* tmp = root;
+		while (tmp != NULL) {
+			simpleFlatten(tmp);
+			tmp = tmp->right;
+		}
+		return;
+	}
+	void simpleFlatten(TreeNode* root) {
+		if (root->left == NULL) return;
+		TreeNode* tmp = root->left;
+		while (tmp->right != NULL) {
+			tmp = tmp->right;
+		}
+		tmp->right = root->right;
+		root->right = root->left;
+		root->left = NULL;
+	}
+};
